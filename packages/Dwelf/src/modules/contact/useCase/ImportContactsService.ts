@@ -3,12 +3,16 @@ import { IImportContactsDTO } from "../DTOs/IImportContactDTO";
 import { IContactRepository } from "../infra/repositories/IContactRepository";
 import ContactSchema from "../infra/entities/ContactSchema";
 import { ICsvProvider } from "@/shared/container/providers/CsvProvider/models/ICsvProvider";
+import { CreateContactsService } from "./CreateContactsService";
 
 @injectable()
 class ImportContactService {
   constructor(
     @inject("ContactRepository")
     private contactRepository: IContactRepository,
+
+    @inject("CreateContactsService")
+    private createContactService: CreateContactsService,
 
     @inject("CsvProvider")
     private csvProvider: ICsvProvider
@@ -31,24 +35,7 @@ class ImportContactService {
       }
     });
 
-    const contactsAlreadyExists = await this.contactRepository.find({
-      cellphone: { $in: contacts.map((contact) => contact.cellphone) },
-    });
-
-    if (contactsAlreadyExists.length) {
-      const contactsAlreadyExistsCellphone = contactsAlreadyExists.map(
-        (contact) => contact.cellphone
-      );
-
-      // remove contacts already exists
-      contacts.forEach((contact) => {
-        if (contactsAlreadyExistsCellphone.includes(contact.cellphone)) {
-          contacts.splice(contacts.indexOf(contact), 1);
-        }
-      });
-    }
-
-    await this.contactRepository.saveMany(contacts);
+    await this.createContactService.execute({ contacts });
   }
 }
 

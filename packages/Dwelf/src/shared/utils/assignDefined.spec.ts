@@ -1,5 +1,6 @@
 import faker from "faker";
 import { assignDefined } from "./assignDefined";
+
 describe("[UNIT] assignDefined", () => {
   it("should returns a new object without undefined, empty or null fields", () => {
     const data = {

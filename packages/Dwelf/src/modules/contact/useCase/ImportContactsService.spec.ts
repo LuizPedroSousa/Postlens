@@ -7,7 +7,6 @@ import { ImportContactService } from "./ImportContactsService";
 import { Readable } from "stream";
 import { ContactRepository } from "../infra/repositories/ContactRepository";
 import { classToPlain } from "class-transformer";
-import ContactSchema from "../infra/entities/ContactSchema";
 
 beforeAll(async () => {
   await connection.create();
@@ -58,41 +57,6 @@ describe("[FUNCTIONAL] Import contacts list", () => {
 
     const contactsFileStream = Readable.from([
       "John Dee;+551234567890\n",
-      "John Dee;+551234567890\n",
-      "Jane Dee;+5511958865461\n",
-    ]);
-
-    await importContactService.execute({
-      contactsFileStream,
-    });
-
-    const contacts = await contactsRepository.find();
-
-    expect(contacts).toHaveLength(2);
-
-    expect(classToPlain(contacts)).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          name: "John Dee",
-          cellphone: "+551234567890",
-        }),
-        expect.objectContaining({
-          name: "Jane Dee",
-          cellphone: "+5511958865461",
-        }),
-      ])
-    );
-  });
-
-  it("should not be able to import existent contacts in database", async () => {
-    const importContactService = container.resolve(ImportContactService);
-    const contactsRepository = container.resolve(ContactRepository);
-
-    await contactsRepository.save(
-      new ContactSchema({ name: "John Dee", cellphone: "+551234567890" })
-    );
-
-    const contactsFileStream = Readable.from([
       "John Dee;+551234567890\n",
       "Jane Dee;+5511958865461\n",
     ]);
