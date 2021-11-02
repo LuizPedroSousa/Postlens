@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "node",
+    "pretty": true,
+    "sourceMap": true,
+    "lib": ["esnext"],
+    "declaration": true,
+    "outDir": "./dist",
+    "typeRoots": ["node_modules/@types"],
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"],
+      "@root/*": ["../*"],
+      "@shared/*": ["shared/*"],
+      "@config/*": ["config/*"],
+      "@modules/*": ["modules/*"],
+      "@exceptions/*": ["shared/exceptions/*"],
+      "@middlewares/*": ["shared/middlewares/*"],
+      "@routes/*": ["routes/*"],
+      "@services/*": ["shared/services/*"],
+      "@utils/*": ["shared/utils/*"]
+    },
+    "allowJs": true,
+    "strictPropertyInitialization": false
+  },
+  "include": ["src/**/*.ts", "src/**/*.spec.ts", "src/**/*.json", ".env"],
+  "exclude": ["node_modules"]
+}
