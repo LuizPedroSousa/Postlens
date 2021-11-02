@@ -2,19 +2,12 @@ import "reflect-metadata";
 import "dotenv/config";
 import "@shared/container";
 import ContactSchema from "../infra/entities/ContactSchema";
-import faker from "faker";
 import { container } from "tsyringe";
 import { CreateContactsService } from "./CreateContactsService";
 import { classToPlain } from "class-transformer";
 import { connection } from "@/shared/utils/testHelpers/orm";
 import { ContactRepository } from "../infra/repositories/ContactRepository";
-
-const buildContactData = () => {
-  return new ContactSchema({
-    name: faker.internet.userName(),
-    cellphone: faker.phone.phoneNumber(),
-  });
-};
+import { buildContactData } from "@/shared/utils/testHelpers/fakes/contact";
 
 beforeAll(async () => {
   await connection.create();
@@ -29,7 +22,7 @@ afterAll(async () => {
   await connection.close();
 });
 
-describe("Create contacts", () => {
+describe("[FUNC] Create contacts", () => {
   it("should be able to insert contacts into database", async () => {
     const data = [buildContactData(), buildContactData()];
 
