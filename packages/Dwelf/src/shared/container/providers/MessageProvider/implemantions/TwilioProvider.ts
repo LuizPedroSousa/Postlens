@@ -9,6 +9,10 @@ class TwilioProvider implements IMessageProvider {
     this.client = new Twilio(accountSid, authToken);
   }
 
+  public getClient(): Twilio {
+    return this.client;
+  }
+
   public async sendMessage({ body, to, type }: ISendMessageDTO): Promise<void> {
     await this.client.messages.create({
       to: type === "whatsapp" ? `${type}:${to}` : to,
