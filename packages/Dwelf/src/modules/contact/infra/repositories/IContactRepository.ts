@@ -5,5 +5,5 @@ export interface IContactRepository {
   findOne(where?: object): Promise<ContactSchema | undefined>;
   saveMany(contacts: ContactSchema[]): Promise<ContactSchema[]>;
   save(contact: ContactSchema): Promise<ContactSchema>;
-  delete(where: object): Promise<void>;
+  delete(where?: object): Promise<void>;
 }

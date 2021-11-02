@@ -21,7 +21,7 @@ afterAll(async () => {
   await connection.close();
 });
 
-describe("[FUNCTIONAL] Import contacts list", () => {
+describe("[FUNC] Import contacts list", () => {
   it("should be able to import new contacts", async () => {
     const importContactService = container.resolve(ImportContactService);
     const contactsRepository = container.resolve(ContactRepository);
