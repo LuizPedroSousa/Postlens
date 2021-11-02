@@ -7,19 +7,22 @@ import { ImportContactService } from "./ImportContactsService";
 import { Readable } from "stream";
 import { ContactRepository } from "../infra/repositories/ContactRepository";
 import { classToPlain } from "class-transformer";
+import ContactSchema from "../infra/entities/ContactSchema";
 
 beforeAll(async () => {
-  if (!process.env.MONGO_URL) {
-    throw new Error("MongoDB server is not initialized");
-  }
   await connection.create();
 });
 
 beforeEach(async () => {
-  await connection.clean();
+  const contactsRepository = container.resolve(ContactRepository);
+  await contactsRepository.delete();
 });
 
-describe("Import", () => {
+afterAll(async () => {
+  await connection.close();
+});
+
+describe("[FUNCTIONAL] Import contacts list", () => {
   it("should be able to import new contacts", async () => {
     const importContactService = container.resolve(ImportContactService);
     const contactsRepository = container.resolve(ContactRepository);
@@ -33,7 +36,74 @@ describe("Import", () => {
       contactsFileStream,
     });
 
-    const contacts = await contactsRepository.findAll({});
+    const contacts = await contactsRepository.find();
+
+    expect(classToPlain(contacts)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: "John Dee",
+          cellphone: "+551234567890",
+        }),
+        expect.objectContaining({
+          name: "Jane Dee",
+          cellphone: "+5511958865461",
+        }),
+      ])
+    );
+  });
+
+  it("should ignore duplicate contacts in CSV", async () => {
+    const importContactService = container.resolve(ImportContactService);
+    const contactsRepository = container.resolve(ContactRepository);
+
+    const contactsFileStream = Readable.from([
+      "John Dee;+551234567890\n",
+      "John Dee;+551234567890\n",
+      "Jane Dee;+5511958865461\n",
+    ]);
+
+    await importContactService.execute({
+      contactsFileStream,
+    });
+
+    const contacts = await contactsRepository.find();
+
+    expect(contacts).toHaveLength(2);
+
+    expect(classToPlain(contacts)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: "John Dee",
+          cellphone: "+551234567890",
+        }),
+        expect.objectContaining({
+          name: "Jane Dee",
+          cellphone: "+5511958865461",
+        }),
+      ])
+    );
+  });
+
+  it("should not be able to import existent contacts in database", async () => {
+    const importContactService = container.resolve(ImportContactService);
+    const contactsRepository = container.resolve(ContactRepository);
+
+    await contactsRepository.save(
+      new ContactSchema({ name: "John Dee", cellphone: "+551234567890" })
+    );
+
+    const contactsFileStream = Readable.from([
+      "John Dee;+551234567890\n",
+      "Jane Dee;+5511958865461\n",
+    ]);
+
+    await importContactService.execute({
+      contactsFileStream,
+    });
+
+    const contacts = await contactsRepository.find();
+
+    expect(contacts).toHaveLength(2);
 
     expect(classToPlain(contacts)).toEqual(
       expect.arrayContaining([
