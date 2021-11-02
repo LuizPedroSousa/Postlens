@@ -1,4 +1,4 @@
 import { container } from "tsyringe";
-import { CsvParserCsvProvider } from "./implemenations/CsvParserCsvProvider";
+import { PapaparseCsvProvider } from "./implemenations/PapaparseCsvProvider";
 
-container.registerSingleton("CsvProvider", CsvParserCsvProvider);
+container.registerSingleton("CsvProvider", PapaparseCsvProvider);
