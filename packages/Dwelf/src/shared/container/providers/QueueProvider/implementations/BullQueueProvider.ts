@@ -1,5 +1,5 @@
 import { cacheConfig } from "@/config/cache";
-import { SendMessageService } from "@/modules/message/useCase/SendMessageService";
+import { SendMessageService } from "@/modules/message/services/SendMessageService";
 import Queue, { QueueOptions } from "bull";
 import { container } from "tsyringe";
 import { IQueueDTO } from "../DTOs/IQueueDTO";

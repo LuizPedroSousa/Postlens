@@ -1,4 +1,4 @@
-import { MessageType } from "@/modules/message/infra/entities/MessageSchema";
+import { MessageType } from "@/modules/message/infra/schemas/Message";
 
 export interface ISendMessageDTO {
   to: string;
