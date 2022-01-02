@@ -1,0 +1,46 @@
+version: "3.7"
+
+services:
+  api: 
+    build:
+      context: ./
+      target: development-build-stage
+      dockerfile: Dockerfile
+    container_name: dwelf
+    restart: 'unless-stopped'
+    ports:
+      - '3333:3333'
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    links:
+      - mongo
+    depends_on:
+      - mongo
+  mailhog:
+    image: mailhog/mailhog
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+  mongo:
+    image: mongo
+    container_name: dwelf_mongo
+    restart: "unless-stopped"
+    environment:
+      PUID: 1000
+      PGID: 1000
+      MONGO_INITDB_ROOT_USERNAME: $MONGO_INITDB_ROOT_USERNAME
+      MONGO_INITDB_ROOT_PASSWORD: $MONGO_INITDB_ROOT_PASSWORD
+      MONGO_INITDB_ROOT_DATABASE: "dwelf_mongo"
+      MONGO_USER: $MONGODB_USER
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    ports:
+      - "27017:27017"
+  redis:
+    image: redis
+    command: redis-server --requirepass $REDIS_PASS --appendonly yes
+    hostname: redis
+    ports:
+      - "6379:6379"
