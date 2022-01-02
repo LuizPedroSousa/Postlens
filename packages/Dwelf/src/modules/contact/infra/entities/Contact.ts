@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 
 @Entity("contacts")
-class ContactSchema {
+class Contact {
   @ObjectIdColumn()
   id: ObjectID;
 
@@ -24,9 +24,9 @@ class ContactSchema {
   @UpdateDateColumn()
   updated_at: Date;
 
-  constructor(props: Omit<ContactSchema, "id" | "created_at" | "updated_at">) {
+  constructor(props: Omit<Contact, "id" | "created_at" | "updated_at">) {
     Object.assign(this, props);
   }
 }
 
-export default ContactSchema;
+export { Contact };

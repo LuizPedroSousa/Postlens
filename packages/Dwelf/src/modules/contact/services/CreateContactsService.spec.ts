@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import "dotenv/config";
 import "@shared/container";
-import ContactSchema from "../infra/entities/ContactSchema";
+import { Contact } from "../infra/entities/Contact";
 import { container } from "tsyringe";
 import { CreateContactsService } from "./CreateContactsService";
 import { classToPlain } from "class-transformer";
@@ -40,7 +40,7 @@ describe("[FUNC] Create contacts", () => {
   it("should not be able to import existent contacts in database", async () => {
     const data = [
       buildContactData(),
-      new ContactSchema({ name: "John Dee", cellphone: "+551234567890" }),
+      new Contact({ name: "John Dee", cellphone: "+551234567890" }),
     ];
 
     const createContactsService = container.resolve(CreateContactsService);

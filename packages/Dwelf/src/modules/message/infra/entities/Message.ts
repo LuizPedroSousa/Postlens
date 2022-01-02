@@ -6,13 +6,15 @@ import {
   ObjectIdColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Prefix } from "./Prefix";
+import { File } from "@modules/files/entities/File";
 
 export type MessageType = "whatsapp" | "sms" | "email";
 
 export type MessageAttributes<T> = Omit<T, "id" | "created_at" | "updated_at">;
 
 @Entity("messages")
-class MessageSchema {
+class Message {
   @ObjectIdColumn()
   id: ObjectID;
 
@@ -23,7 +25,16 @@ class MessageSchema {
   type: MessageType;
 
   @Column()
+  subject?: string;
+
+  @Column()
   user_id: string;
+
+  @Column()
+  prefixes?: Prefix[];
+
+  @Column()
+  templateFile?: File;
 
   @Column()
   completed_at?: Date;
@@ -34,9 +45,9 @@ class MessageSchema {
   @UpdateDateColumn()
   updated_at: Date;
 
-  constructor(props: MessageAttributes<MessageSchema>) {
+  constructor(props: MessageAttributes<Message>) {
     Object.assign(this, props);
   }
 }
 
-export { MessageSchema };
+export { Message };

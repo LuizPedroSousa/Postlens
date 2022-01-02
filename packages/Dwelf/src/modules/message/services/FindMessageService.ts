@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IFindMessageDTO } from "../DTOs/IFindMessageDTO";
-import { MessageSchema } from "../infra/entities/MessageSchema";
+import { Message } from "../infra/entities/Message";
 import { IMessageRepository } from "../infra/repositories/IMessageRepository";
 
 @injectable()
@@ -10,7 +10,7 @@ class FindMessageService {
     private messageRepository: IMessageRepository
   ) {}
 
-  async execute({ message_id }: IFindMessageDTO): Promise<MessageSchema> {
+  async execute({ message_id }: IFindMessageDTO): Promise<Message> {
     const messageAlreadyExists = await this.messageRepository.findById(
       message_id
     );

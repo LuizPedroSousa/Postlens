@@ -17,7 +17,10 @@ describe("[FUNC] Send message service", () => {
 
     const data: ISendMessageDTO = {
       message: body,
-      to: "+5511958865461",
+      to: {
+        address: "+5511958865461",
+        name: "John Dee",
+      },
       type,
     };
 

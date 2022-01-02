@@ -4,7 +4,7 @@ import "@shared/container";
 import { ContactRepository } from "@/modules/contact/infra/repositories/ContactRepository";
 import { connection } from "@/shared/utils/testHelpers/orm";
 import { container } from "tsyringe";
-import { MessageSchema } from "../infra/entities/MessageSchema";
+import { Message } from "../infra/entities/Message";
 import { MessageRepository } from "../infra/repositories/MessageRepository";
 import { AddQueueMessageService } from "./AddQueueMessageService";
 
@@ -43,7 +43,7 @@ describe("[FUNC] Add Queue Message Service", () => {
 
     await contactRepository.saveMany(contacts);
 
-    const message = new MessageSchema({
+    const message = new Message({
       user_id: "1234",
       body: "Olá {name}!, seja bem vindo a plataforma.",
       type: "whatsapp",

@@ -1,16 +1,12 @@
 import { inject, injectable } from "tsyringe";
 import { IImportContactsDTO } from "../DTOs/IImportContactDTO";
-import { IContactRepository } from "../infra/repositories/IContactRepository";
-import ContactSchema from "../infra/entities/ContactSchema";
+import { Contact } from "../infra/entities/Contact";
 import { ICsvProvider } from "@/shared/container/providers/CsvProvider/models/ICsvProvider";
 import { CreateContactsService } from "./CreateContactsService";
 
 @injectable()
 class ImportContactService {
   constructor(
-    @inject("ContactRepository")
-    private contactRepository: IContactRepository,
-
     @inject("CreateContactsService")
     private createContactService: CreateContactsService,
 
@@ -19,7 +15,7 @@ class ImportContactService {
   ) {}
 
   async execute({ contactsFileStream }: IImportContactsDTO): Promise<void> {
-    const contacts: ContactSchema[] = [];
+    const contacts: Contact[] = [];
 
     await this.csvProvider.parse(contactsFileStream, async (line) => {
       const [name, cellphone] = line;
@@ -30,7 +26,7 @@ class ImportContactService {
           (contact) => contact.cellphone === cellphone || contact.name === name
         )
       ) {
-        const contact = new ContactSchema({ name, cellphone });
+        const contact = new Contact({ name, cellphone });
         contacts.push(contact);
       }
     });

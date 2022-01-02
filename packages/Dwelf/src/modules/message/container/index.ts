@@ -1,7 +1,7 @@
 import { container } from "tsyringe";
 import { IMessageRepository } from "../infra/repositories/IMessageRepository";
 import { MessageRepository } from "../infra/repositories/MessageRepository";
-import { FindMessageService } from "../useCase/FindMessageService";
+import { FindMessageService } from "../services/FindMessageService";
 
 container.registerSingleton<IMessageRepository>(
   "MessageRepository",

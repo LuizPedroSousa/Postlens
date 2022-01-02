@@ -1,9 +1,6 @@
-import {
-  MessageAttributes,
-  MessageSchema,
-} from "../infra/entities/MessageSchema";
+import { MessageAttributes, Message } from "../infra/entities/Message";
 
 export interface ICreateMessageDTO {
-  message: Omit<MessageAttributes<MessageSchema>, "user_id">;
+  message: Omit<MessageAttributes<Message>, "user_id">;
   user_id: string;
 }
