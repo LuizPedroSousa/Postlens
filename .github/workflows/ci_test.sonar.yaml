@@ -1,8 +1,10 @@
 name: Sonar Node.js CI Tests
 
-on: 
+on:
+  pull_request:
+    paths: packages/Sonar/**
   push:
-    paths: packages/Sonar
+    paths: packages/Sonar/**
 
 jobs:
   build:
