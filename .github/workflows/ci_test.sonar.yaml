@@ -1,25 +1,23 @@
 name: Sonar Node.js CI Tests
 
-on:
-  pull_request:
-    paths: packages/Sonar/**
-  push:
-    paths: packages/Sonar/**
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
+    defaults:
+      run:
+        working-directory: ./packages/Sonar
+
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Setup node
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: cd packages/Sonar
-    - run: npm run build --if-present
-    - run: npm test
+        node-version: '16'
+
+    - name: Run build
+      run: yarn
+    - name: Run tests
+      run: yarn test
