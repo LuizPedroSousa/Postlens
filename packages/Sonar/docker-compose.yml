@@ -1,10 +1,26 @@
 version: "3.6"
 services:
   # API
+  sonar-server:
+    build:
+      target: development-build-stage
+      context: "."
+      dockerfile: Dockerfile
+    container_name: "sonar-api"
+    restart: "unless-stopped"
+    ports:
+      - "3333:3333"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    links:
+      - sonar-postgres
+    depends_on:
+      - sonar-postgres
   sonar-postgres:
     image: postgres
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./scripts/postgres:/docker-entrypoint-initdb.d
     container_name: sonar-postgres
     environment:
       PUID: 1000
@@ -25,32 +41,3 @@ services:
       - "6379:6379"
     volumes:
       - /tmp/redis:/bitnami/redis/data
-  sonar-server:
-    build:
-      target: development-build-stage
-      context: "."
-      dockerfile: Dockerfile
-    container_name: "sonar-api"
-    restart: "unless-stopped"
-    ports:
-      - "3333:3333"
-    volumes:
-      - ./:/app
-      - /app/node_modules
-    links:
-      - sonar-postgres
-    depends_on:
-      - sonar-postgres
-  sonar-postgres-test:
-    image: postgres
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    container_name: sonar-postgres-test
-    environment:
-      PUID: 1000
-      PGID: 1000
-      POSTGRES_USER: $TEST_POSTGRES_USER
-      POSTGRES_PASSWORD: $TEST_POSTGRES_PASSWORD
-      POSTGRES_DATABASE: "sonar-postgres-test"
-    ports:
-      - "5430:5432"
