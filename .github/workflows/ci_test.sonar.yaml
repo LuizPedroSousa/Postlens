@@ -12,10 +12,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Setup node
       uses: actions/setup-node@v3
       with:
         node-version: '16'
-    - run: cd packages/Sonar
-    - run: yarn
-    - run: yarn test
+
+    - name: Run build
+      working-directory: ./packages/Sonar
+      run: yarn
+    - name: Run tests
+      working-directory: ./packages/Sonar
+      run: yarn test
