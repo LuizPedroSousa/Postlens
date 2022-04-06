@@ -1,6 +1,5 @@
-import { Either } from "@shared/core/either";
 import { InvalidPasswordException } from "./exceptions/InvalidPasswordException";
-import { Password } from "./password";
+import { Password } from "./Password";
 
 describe("[UNIT] - [USERS] - Password entity", () => {
   it("should be able to return a Password entity, when password is valid", () => {
