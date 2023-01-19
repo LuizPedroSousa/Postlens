@@ -1,4 +1,4 @@
-import { Either, left, right } from "@shared/core/either";
+import { Either, left, right } from "@shared/domain/either";
 import { InvalidPasswordException } from "./exceptions/InvalidPasswordException";
 
 export class Password {

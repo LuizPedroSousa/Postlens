@@ -1,4 +1,4 @@
-import { Either, left, right } from "@shared/core/either";
+import { Either, left, right } from "@shared/domain/either";
 import { InvalidEmailException } from "./exceptions/InvalidEmailException";
 
 export class Email {

@@ -1,4 +1,4 @@
-import { Either } from "@shared/core/either";
+import { Either } from "@shared/domain/either";
 import { Email } from "./Email";
 import { InvalidEmailException } from "./exceptions/InvalidEmailException";
 import faker from "@faker-js/faker";

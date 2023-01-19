@@ -1,4 +1,4 @@
-import { left } from "@shared/core/either";
+import { left } from "@shared/domain/either";
 import { Cellphone } from "../entities/Cellphone";
 import { InvalidCellphoneException } from "../entities/exceptions/InvalidCellphoneException";
 
