@@ -1,11 +1,10 @@
 import { Either, left, right } from "@shared/domain/either";
+import { ValueObject } from "@shared/domain/ValueObject";
 import { InvalidEmailException } from "./exceptions/InvalidEmailException";
 
-export class Email {
-  public email: string;
-
-  constructor(email: string) {
-    this.email = email;
+export class Email extends ValueObject {
+  constructor(public value: string) {
+    super();
     Object.freeze(this);
   }
 

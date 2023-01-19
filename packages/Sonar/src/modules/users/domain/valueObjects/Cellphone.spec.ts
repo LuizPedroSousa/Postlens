@@ -1,6 +1,6 @@
 import { left } from "@shared/domain/either";
-import { Cellphone } from "../entities/Cellphone";
-import { InvalidCellphoneException } from "../entities/exceptions/InvalidCellphoneException";
+import { Cellphone } from "./Cellphone";
+import { InvalidCellphoneException } from "./exceptions/InvalidCellphoneException";
 
 describe("[UNIT] - [USERS] - Cellphone entity", () => {
   it("should give a cellphone entity, when given a valid cellphone", () => {
@@ -9,7 +9,7 @@ describe("[UNIT] - [USERS] - Cellphone entity", () => {
     const cellphoneOrError = Cellphone.create(cellphone);
 
     expect(cellphoneOrError.isLeft()).toBeFalsy();
-    expect(cellphoneOrError.value).toEqual({ cellphone });
+    expect(cellphoneOrError.value).toEqual({ value: cellphone });
   });
 
   it("should give InvalidPhoneException, when DDD code is grater than two", () => {

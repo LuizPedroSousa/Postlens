@@ -1,8 +1,10 @@
 import { Either, left, right } from "@shared/domain/either";
+import { ValueObject } from "@shared/domain/ValueObject";
 import { InvalidPasswordException } from "./exceptions/InvalidPasswordException";
 
-export class Password {
-  private constructor(public password: string) {
+export class Password extends ValueObject {
+  private constructor(public value: string) {
+    super();
     Object.freeze(this);
   }
 

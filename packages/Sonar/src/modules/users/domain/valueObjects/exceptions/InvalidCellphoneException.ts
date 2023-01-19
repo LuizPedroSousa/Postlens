@@ -1,4 +1,4 @@
-import { BaseException } from "../../../../shared/domain/BaseException";
+import { BaseException } from "@shared/domain/BaseException";
 
 export class InvalidCellphoneException extends Error implements BaseException {
   constructor(cellphone: string) {

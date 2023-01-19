@@ -1,48 +1,7 @@
 import { Either } from "@shared/domain/either";
 import { Email } from "./Email";
 import { InvalidEmailException } from "./exceptions/InvalidEmailException";
-import faker from "@faker-js/faker";
-
-interface CreateInvalidEmailDTO {
-  recipientLength?: number;
-  domainLength?: number;
-  atSign?: boolean;
-}
-
-class EmailFaker {
-  public static create(): string {
-    return faker.internet.email();
-  }
-
-  public static createInvalid({
-    recipientLength = 4,
-    domainLength = 4,
-    atSign = true,
-  }: CreateInvalidEmailDTO): string {
-    const recipient = faker.random.alpha({ count: recipientLength });
-
-    const domain = faker.random.alpha({ count: domainLength });
-
-    const atSignString = atSign ? "@" : "";
-
-    const email = EmailFaker.formatEmail(
-      `${recipient}${atSignString}${domain}.com`
-    );
-
-    return email;
-  }
-
-  private static formatEmail(email: string): string {
-    let result = email;
-
-    const removeBlankSpaces = (value: string): string =>
-      value.replace(/\s/gi, "");
-
-    result = removeBlankSpaces(result);
-
-    return result;
-  }
-}
+import { EmailFaker } from "./fakes/EmailFaker";
 
 describe("[UNIT] - [USERS] - Email domain entity", () => {
   it("should be able to return a Email, when email credential has valid", () => {
@@ -53,7 +12,7 @@ describe("[UNIT] - [USERS] - Email domain entity", () => {
 
     expect(emailOrError.isLeft()).toBeFalsy();
     expect(emailOrError.isRight()).toBeTruthy();
-    expect(emailOrError.value).toEqual({ email });
+    expect(emailOrError.value).toEqual({ value: email });
   });
 
   it("should give an InvalidEmailException, when email is blank", () => {

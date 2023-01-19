@@ -1,8 +1,12 @@
 import { Either, left, right } from "@shared/domain/either";
+import { ValueObject } from "@shared/domain/ValueObject";
 import { InvalidCellphoneException } from "./exceptions/InvalidCellphoneException";
 
-export class Cellphone {
-  private constructor(public cellphone: string) {}
+export class Cellphone extends ValueObject {
+  private constructor(public value: string) {
+    super();
+    Object.freeze(this);
+  }
 
   static create(
     cellphone: string

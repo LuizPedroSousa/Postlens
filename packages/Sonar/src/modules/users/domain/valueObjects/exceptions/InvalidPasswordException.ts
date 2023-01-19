@@ -1,4 +1,4 @@
-import { BaseException } from "../../../../shared/domain/BaseException";
+import { BaseException } from "@shared/domain/BaseException";
 
 export class InvalidPasswordException extends Error implements BaseException {
   constructor(password: string) {
