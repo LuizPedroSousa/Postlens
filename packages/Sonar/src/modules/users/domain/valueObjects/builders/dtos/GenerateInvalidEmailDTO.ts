@@ -1,4 +1,4 @@
-export interface CreateInvalidEmailDTO {
+export interface GenerateInvalidEmailDTO {
   recipientLength?: number;
   domainLength?: number;
   atSign?: boolean;

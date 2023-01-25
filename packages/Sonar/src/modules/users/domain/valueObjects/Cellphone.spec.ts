@@ -1,10 +1,11 @@
 import { left } from "@shared/domain/either";
 import { Cellphone } from "./Cellphone";
 import { InvalidCellphoneException } from "./exceptions/InvalidCellphoneException";
+import { CellphoneBuilder } from "./builders/CellphoneBuilder";
 
 describe("[UNIT] - [USERS] - Cellphone entity", () => {
   it("should give a cellphone entity, when given a valid cellphone", () => {
-    const cellphone = "11999999999";
+    const cellphone = CellphoneBuilder.generate();
 
     const cellphoneOrError = Cellphone.create(cellphone);
 

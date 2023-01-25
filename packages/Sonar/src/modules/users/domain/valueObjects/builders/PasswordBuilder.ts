@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker";
-import { CreatePasswordDTO } from "./dtos/CreatePasswordDTO";
+import { GeneratePasswordDTO } from "./dtos/GeneratePasswordDTO";
 
-export class PasswordFaker {
-  static create(props?: CreatePasswordDTO): string {
+export class PasswordBuilder {
+  static generate(props?: GeneratePasswordDTO): string {
     const result = faker.internet.password(
       props?.length || 9,
       false,
