@@ -38,7 +38,9 @@ describe("[UNIT] - [USERS] - User Entity", () => {
   it("should give an InvalidPasswordException when password is invalid", () => {
     const userOrError = User.create(
       UserBuilder.generate({
-        password: PasswordBuilder.generate({ nonSpecialCharacter: true }),
+        password: PasswordBuilder.generateInvalid({
+          nonSpecialCharacter: true,
+        }),
       })
     );
 

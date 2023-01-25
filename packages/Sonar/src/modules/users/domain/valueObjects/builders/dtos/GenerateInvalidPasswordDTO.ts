@@ -1,4 +1,4 @@
-export interface GeneratePasswordDTO {
+export interface GenerateInvalidPasswordDTO {
   length?: number;
   lowerCase?: boolean;
   onlyNumbers?: boolean;
