@@ -1,5 +1,5 @@
-import ContactSchema from "../infra/entities/ContactSchema";
+import { Contact } from "../infra/entities/Contact";
 
 export interface ICreateContactsDTO {
-  contacts: ContactSchema[];
+  contacts: Contact[];
 }

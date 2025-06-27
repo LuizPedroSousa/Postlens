@@ -18,7 +18,7 @@ class App {
   public server: HTTPServer;
   public address: string;
   constructor() {
-    this.port = process.env.PORT || 3000;
+    this.port = process.env.PORT || 3333;
     this.address = process.env.ADDRESS || "http://localhost";
     this.app = express();
     this.server = createServer(this.app);

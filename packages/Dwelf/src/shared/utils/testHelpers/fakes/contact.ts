@@ -1,8 +1,8 @@
-import ContactSchema from "@/modules/contact/infra/entities/ContactSchema";
+import { Contact } from "@/modules/contact/infra/entities/Contact";
 import faker from "faker";
 
 const buildContactData = () => {
-  return new ContactSchema({
+  return new Contact({
     name: faker.internet.userName(),
     cellphone: faker.phone.phoneNumber(),
   });

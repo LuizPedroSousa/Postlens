@@ -1,9 +1,9 @@
-import ContactSchema from "../entities/ContactSchema";
+import { Contact } from "../entities/Contact";
 
 export interface IContactRepository {
-  find(where?: object): Promise<ContactSchema[]>;
-  findOne(where?: object): Promise<ContactSchema | undefined>;
-  saveMany(contacts: ContactSchema[]): Promise<ContactSchema[]>;
-  save(contact: ContactSchema): Promise<ContactSchema>;
+  find(where?: object): Promise<Contact[]>;
+  findOne(where?: object): Promise<Contact | undefined>;
+  saveMany(contacts: Contact[]): Promise<Contact[]>;
+  save(contact: Contact): Promise<Contact>;
   delete(where?: object): Promise<void>;
 }

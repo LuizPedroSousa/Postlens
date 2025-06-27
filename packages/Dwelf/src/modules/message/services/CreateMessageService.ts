@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { ICreateMessageDTO } from "../DTOs/ICreateMessageDTO";
-import { MessageSchema } from "../infra/entities/MessageSchema";
+import { Message } from "../infra/entities/Message";
 import { IMessageRepository } from "../infra/repositories/IMessageRepository";
 
 @injectable()
@@ -10,7 +10,7 @@ class CreateMessageService {
     private messageRepository: IMessageRepository
   ) {}
 
-  async execute(data: ICreateMessageDTO): Promise<MessageSchema> {
+  async execute(data: ICreateMessageDTO): Promise<Message> {
     const messageAlreadyExists = await this.messageRepository.findOne({
       user_id: data.user_id,
     });
@@ -19,7 +19,7 @@ class CreateMessageService {
       throw new Error("Esta mensagem já existe.");
     }
 
-    const message = new MessageSchema({
+    const message = new Message({
       ...data.message,
       user_id: data.user_id,
     });
